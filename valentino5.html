@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Final Question ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+/* BIGGEST GLASS BOX YET */
+.box{
+  width:85%;
+  max-width:900px;
+  padding:70px 60px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(20px);
+  border-radius:35px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+
+/* BIGGER TEXT */
+h1{
+  font-size:3.2rem;
+  color:white;
+  margin-bottom:50px;
+  line-height:1.3;
+}
+
+/* BUTTONS */
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+}
+
+button{
+  padding:20px 55px;
+  font-size:1.6rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+.yes:hover{
+  transform:scale(1.08);
+}
+
+.no{
+  background:#333;
+  color:white;
+}
+
+.no:hover{
+  transform:scale(0.95);
+}
+
+/* MESSAGE */
+#msg{
+  margin-top:30px;
+  font-size:1.4rem;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>Akhri baar sochlo  
+  <br>Pkka banna hai my Valentine? 💖</h1>
+
+  <div class="buttons">
+    <button class="yes" onclick="goYes()">YES ❤️</button>
+    <button class="no" onclick="goNo()">NO 😏</button>
+  </div>
+
+  <div id="msg"></div>
+</div>
+
+<script>
+function goYes(){
+  window.location.href="final.html";
+}
+
+function goNo(){
+  document.getElementById("msg").innerText =
+    "Nice try 😌 You know the answer is YES ❤️";
+}
+</script>
+
+</body>
+</html>

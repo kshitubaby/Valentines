@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  overflow:hidden;
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:absolute;
+  color:rgba(255,255,255,0.5);
+  font-size:20px;
+  animation:float 10s linear infinite;
+}
+
+@keyframes float{
+  from{ transform:translateY(100vh); }
+  to{ transform:translateY(-10vh); }
+}
+
+/* GLASS BOX */
+.box{
+  position:relative;
+  z-index:10;
+  width:85%;
+  max-width:850px;
+  padding:70px 60px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(20px);
+  border-radius:35px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  
+}
+
+/* TITLE */
+h1{
+  font-size:3.5rem;
+  color:white;
+  margin-bottom:30px;
+}
+
+/* MESSAGE */
+#message{
+  font-size:1.4rem;
+  color:white;
+  line-height:1.8;
+  min-height:120px;
+}
+
+/* SIGNATURE */
+.signature{
+  margin-top:40px;
+  font-size:1.5rem;
+  color:white;
+  opacity:0;
+  animation:fadeIn 2s ease forwards;
+  animation-delay:6s;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+
+#nextPage{
+  margin-top:40px;
+  padding:15px 45px;
+  font-size:1.2rem;
+  border:none;
+  border-radius:40px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+  opacity:0;
+  animation:fadeIn 2s ease forwards;
+  animation-delay:7s;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOVE BOX -->
+<div class="box">
+  <h1>Forever Starts Here 💍</h1>
+  <div id="message"></div>
+  <div class="signature">— Yours, Always ❤️</div>
+  <button id="nextPage">What’s next? ⏳</button>
+
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio autoplay loop volume="0.4">
+  <source src="audio/final-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* TYPEWRITER TEXT */
+const text = `
+You made it through every question,
+every challenge,
+every maze…
+
+And still chose me ❤️
+
+This isn’t just a Valentine.
+This is a promise,
+a journey,
+and a forever I want with you.
+
+Thank you for choosing me.
+Thank you for being you.
+`;
+
+let i = 0;
+const speed = 40;
+const target = document.getElementById("message");
+
+function type(){
+  if(i < text.length){
+    target.innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type, speed);
+  }
+}
+type();
+
+/* FLOATING HEARTS */
+for(let i=0;i<30;i++){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=5+Math.random()*5+"s";
+  heart.style.fontSize=15+Math.random()*25+"px";
+  document.body.appendChild(heart);
+}
+document.getElementById("nextPage").onclick = () => {
+  window.location.href = "countdown.html";
+};
+
+</script>
+
+</body>
+</html>

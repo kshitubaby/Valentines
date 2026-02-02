@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentino 3</title>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+.card{
+  width:90%;
+  max-width:600px; /* larger than valentino2 */
+  background: rgba(255,255,255,0.2);
+  border-radius:25px;
+  padding:50px; /* bigger padding */
+  text-align:center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+h1{
+  font-size:2.5rem; /* larger text */
+  margin-bottom:40px;
+}
+
+button{
+  padding:25px 50px; /* larger buttons */
+  margin:15px;
+  border:none;
+  border-radius:20px;
+  background:#ff4f81;
+  color:white;
+  font-size:22px;
+  cursor:pointer;
+}
+button:hover { transform: scale(1.05); }
+
+@media screen and (max-width:400px){
+  .card{padding:30px 20px;}
+  h1{font-size:2rem;}
+  button{padding:15px 30px; font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Are you sure sure you want to be my valentine? ❤️</h1>
+  <button onclick="answerYes()">Yes</button>
+  <button onclick="answerNo()">No</button>
+</div>
+
+<script>
+function answerYes(){
+  window.location.href="valentino4.html";
+}
+function answerNo(){
+  alert("Try again! 🥹");
+}
+</script>
+
+</body>
+</html>

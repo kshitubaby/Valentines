@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess Our Memory 💖</title>
+<style>
+/* Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Body & Pink Love Background */
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Deep Love Pink Theme */
+  background: linear-gradient(rgba(255, 71, 126, 0.6), rgba(255, 20, 147, 0.6)), 
+              url('https://www.transparenttextures.com/patterns/heart-pattern.png'),
+              #ff4d6d;
+  background-size: cover;
+  position: relative;
+}
+
+/* HALF BANNER - Positioned a little below the top */
+.floating-banner {
+  position: absolute;
+  top: 40px; /* Moves it down from the very top */
+  width: auto;
+  min-width: 250px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 30px;
+  border-radius: 50px; /* Makes it look like a floating pill */
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Floating "I LOVE YOU" text */
+.floating-text {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.3);
+  animation: floatText linear infinite;
+  z-index: 1;
+}
+
+@keyframes floatText {
+  0% { left: -300px; top: calc(10% + var(--y)); }
+  100% { left: 100vw; top: calc(10% + var(--y)); }
+}
+
+/* Glass morph card */
+.card {
+  width: 90%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 30px 20px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+h1 {
+  color: white;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+img {
+  width: 100%;
+  height: 200px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  filter: blur(10px);
+  object-fit: cover;
+  transition: filter 0.6s ease, transform 0.3s;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  margin-bottom: 15px;
+  font-size: 16px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: #ff0054;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255, 0, 84, 0.4);
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  background: #ff4d6d;
+}
+
+#status {
+  margin-top: 15px;
+  color: #fff;
+  font-weight: 500;
+  height: 20px;
+}
+
+/* Final Message Styling */
+#finalCard {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+}
+</style>
+</head>
+<body>
+
+<div class="floating-banner">💝 Valentine's Special 💝</div>
+
+<div id="floatingContainer"></div>
+
+<div class="card" id="memoryCard">
+  <h1>🧠 Guess Our Memory</h1>
+  <img id="memoryImg" src="" alt="Memory Image">
+  <input id="ans" placeholder="Type the answer...">
+  <button onclick="check()">Unlock Secret 🔒</button>
+  <p id="status"></p>
+</div>
+
+<div id="finalCard">
+  <img src="Images/move.gif.gif" alt="Love GIF" style="filter:none; width: 180px; margin-bottom: 20px;"> 
+  <div class="card">
+    <h1 style="font-size: 2.2rem;">I LOVE YOU ❤️</h1>
+    <p style="color:white; margin-bottom: 25px;">You are my favorite person in the whole world.</p>
+    <button id="moveForward">Ready for more? ✨</button>
+  </div>
+</div>
+
+<script>
+// Create floating background text
+const floatingContainer = document.getElementById('floatingContainer');
+for(let i=0; i<12; i++){
+  let span = document.createElement('span');
+  span.className='floating-text';
+  span.style.setProperty('--y',`${Math.random()*85}vh`);
+  span.style.animationDuration = `${7 + Math.random()*10}s`;
+  span.style.animationDelay = `${Math.random()*5}s`;
+  span.innerText = 'LOVE YOU ❤️';
+  floatingContainer.appendChild(span);
+}
+
+const memories=[
+  {img:"Images/mem1.jpeg", a:"New Years"},
+  {img:"images/mem2.jpeg", a:"One Year Anniversary"},
+  {img:"images/mem3.jpeg", a:"Work From Home"},
+  {img:"images/mem4.jpeg", a:"Travis"},
+  {img:"images/mem5.jpeg", a:"25th Anniversary"}
+];
+
+let index=0;
+const imgEl=document.getElementById('memoryImg');
+const statusEl=document.getElementById('status');
+const ansEl=document.getElementById('ans');
+const memoryCard = document.getElementById('memoryCard');
+const finalCard = document.getElementById('finalCard');
+
+imgEl.src = memories[index].img;
+
+function check(){
+  const val = ansEl.value.toLowerCase().trim();
+  const correctAnswer = memories[index].a.toLowerCase();
+
+  // If the answer is "first date", this allows "first date", "the first date", or "our first date"
+  if(val.includes(correctAnswer) || correctAnswer.includes(val) && val.length > 3){
+    imgEl.style.filter = 'blur(0)';
+    imgEl.style.transform = 'scale(1.05)';
+    statusEl.innerText = "✨ Yes! 💖";
+    
+    setTimeout(()=>{
+      index++;
+      if(index === memories.length){
+        memoryCard.style.display='none';
+        finalCard.style.display='flex';
+      } else {
+        imgEl.src = memories[index].img;
+        imgEl.style.filter = 'blur(10px)';
+        imgEl.style.transform = 'scale(1)';
+        ansEl.value="";
+        statusEl.innerText="";
+      }
+    },1600);
+  } else {
+    statusEl.innerText = "Try again, love 🥹";
+    // Shake the input box to show it was wrong
+    ansEl.style.animation = "shake 0.2s ease-in-out 0s 2";
+  }
+}
+document.getElementById('moveForward').addEventListener('click', () => {
+  window.location.href="valentino1.html";
+});
+
+ansEl.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") check();
+});
+</script>
+</body>
+</html>

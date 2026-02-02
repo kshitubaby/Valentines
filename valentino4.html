@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentino 4</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+.card{
+  width:90%;
+  max-width:650px;
+  background: rgba(255,255,255,0.2);
+  border-radius:25px;
+  padding:40px;
+  text-align:center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
+  color:white;
+}
+
+h1{
+  font-size:2rem;
+  margin-bottom:25px;
+}
+
+textarea{
+  width:100%;
+  height:140px;
+  border-radius:15px;
+  border:none;
+  padding:15px;
+  font-size:16px;
+  outline:none;
+  resize:none;
+  margin-bottom:20px;
+}
+
+button{
+  padding:15px 35px;
+  border:none;
+  border-radius:15px;
+  background:#ff4f81;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+/* Final message section */
+#finalMessage{
+  display:none;
+}
+
+#finalMessage h2{
+  font-size:2.2rem;
+  margin-bottom:15px;
+}
+
+#finalMessage p{
+  font-size:1.5rem;
+  margin-bottom:25px;
+}
+
+@media(max-width:400px){
+  h1{font-size:1.6rem;}
+  #finalMessage h2{font-size:1.8rem;}
+  #finalMessage p{font-size:1.2rem;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="inputCard">
+  <h1>Okay, good decision!  
+  Now tell me why should I be your valentine? ❤️</h1>
+
+  <textarea id="reason" placeholder="Type your answer here..."></textarea>
+  <button onclick="submitAnswer()">Submit</button>
+</div>
+
+<div class="card" id="finalMessage">
+  <h2>Congratulations on having the best Boyfriend in the world ❤️</h2>
+  <p>Come Catch me first! 🎮✨</p>
+  <button onclick="goToGame()">Start Final Game</button>
+</div>
+
+<script>
+function submitAnswer(){
+  const text = document.getElementById("reason").value.trim();
+  if(!text){
+    alert("Please write something 🥹");
+    return;
+  }
+
+  // Hide input card
+  document.getElementById("inputCard").style.display="none";
+
+  // Show final message
+  document.getElementById("finalMessage").style.display="block";
+}
+
+function goToGame(){
+  window.location.href="game4.html";
+}
+</script>
+
+</body>
+</html>

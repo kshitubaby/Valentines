@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maze to My Heart ❤️</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  overflow:hidden;
+}
+
+/* GAME CONTAINER */
+.game{
+  position:relative;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
+}
+
+/* MAZE */
+.maze{
+  display:grid;
+  grid-template-columns:repeat(9, 50px);
+  grid-template-rows:repeat(7, 50px);
+  gap:5px;
+}
+
+/* CELLS */
+.cell{
+  width:50px;
+  height:50px;
+  background:rgba(255,255,255,0.3);
+  border-radius:10px;
+}
+
+.wall{
+  background:rgba(0,0,0,0.45);
+}
+
+/* CHARACTERS */
+.character{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.character img{
+  width:40px;
+  height:40px;
+}
+
+/* FINAL OVERLAY */
+#finalOverlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(5px);
+  border-radius:20px;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* LOVE IMAGE */
+#finalOverlay img{
+  width:220px;
+  animation:zoomOut 1.6s ease forwards;
+}
+
+/* TEXT */
+#finalOverlay h1{
+  margin-top:20px;
+  color:white;
+  font-size:2.2rem;
+  text-align:center;
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:1.2s;
+}
+
+/* BUTTON */
+#nextBtn{
+  margin-top:30px;
+  padding:15px 40px;
+  font-size:1.2rem;
+  border:none;
+  border-radius:40px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:2s;
+}
+
+/* ANIMATIONS */
+@keyframes zoomOut{
+  from{ transform:scale(2); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+  <div class="maze" id="maze"></div>
+
+  <!-- FINAL SCENE -->
+  <div id="finalOverlay">
+    <img src="images/mem8.jpeg" alt="Love">
+    <h1>💖 YOU MADE IT TO ME MY DARLING! 💖</h1>
+    <button id="nextBtn">Continue ❤️</button>
+  </div>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="audio/love-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const mazeMap = [
+ [0,0,1,0,0,0,1,0,0],
+ [1,0,1,0,1,0,1,0,1],
+ [0,0,0,0,1,0,0,0,0],
+ [0,1,1,0,1,1,1,1,0],
+ [0,0,0,0,0,0,0,1,0],
+ [1,1,1,1,1,1,0,1,0],
+ [0,0,0,0,0,0,0,0,0]
+];
+
+const maze = document.getElementById("maze");
+const overlay = document.getElementById("finalOverlay");
+const music = document.getElementById("bgMusic");
+
+let girlPos = { x:0, y:3 };
+const boyPos = { x:8, y:3 };
+let won=false;
+let musicStarted=false;
+
+function drawMaze(){
+  maze.innerHTML="";
+  mazeMap.forEach((row,y)=>{
+    row.forEach((cell,x)=>{
+      const div=document.createElement("div");
+      div.className="cell";
+      if(cell===1) div.classList.add("wall");
+
+      if(x===girlPos.x && y===girlPos.y){
+        div.classList.add("character");
+        div.innerHTML='<img src="Images/mem6.jpeg">';
+      }
+
+      if(x===boyPos.x && y===boyPos.y){
+        div.classList.add("character");
+        div.innerHTML='<img src="Images/mem7.jpeg">';
+      }
+
+      maze.appendChild(div);
+    });
+  });
+}
+
+document.addEventListener("keydown", e=>{
+  if(!musicStarted){
+    music.volume=0.4;
+    music.play();
+    musicStarted=true;
+  }
+
+  if(won) return;
+
+  let {x,y}=girlPos;
+
+  if(e.key.toLowerCase()==="w") y--;
+  if(e.key.toLowerCase()==="s") y++;
+  if(e.key.toLowerCase()==="a") x--;
+  if(e.key.toLowerCase()==="d") x++;
+
+  if(mazeMap[y] && mazeMap[y][x]===0){
+    girlPos={x,y};
+    drawMaze();
+    checkWin();
+  }
+});
+
+function checkWin(){
+  if(girlPos.x===boyPos.x && girlPos.y===boyPos.y){
+    won=true;
+    overlay.style.opacity="1";
+    overlay.style.pointerEvents="auto";
+  }
+}
+
+document.getElementById("nextBtn").onclick=()=>{
+  window.location.href="valentino5.html";
+};
+
+drawMaze();
+</script>
+
+</body>
+</html>

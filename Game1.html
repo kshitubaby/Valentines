@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heart Quest</title>
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  margin:0;
+  padding:0;
+}
+
+body {
+  height: 100vh;
+  /* UPGRADED BACKGROUND: Romantic image with an overlay */
+  background: linear-gradient(rgba(255, 117, 140, 0.5), rgba(255, 117, 140, 0.5)), 
+              url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Added floating hearts animation for the background */
+body::before {
+  content: "❤️";
+  position: absolute;
+  top: -10%;
+  left: 10%;
+  font-size: 20px;
+  opacity: 0.3;
+  animation: float 10s infinite linear;
+}
+
+@keyframes float {
+  from { transform: translateY(110vh) rotate(0deg); }
+  to { transform: translateY(-10vh) rotate(360deg); }
+}
+
+.card {
+  width: 380px;
+  background: rgba(255, 255, 255, 0.15); /* More transparent for better glass effect */
+  border-radius: 20px;
+  padding: 30px 25px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+p {
+  color: white;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px; /* Rounder inputs */
+  border: none;
+  outline: none;
+  margin-bottom: 15px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #ff4f81;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(255, 79, 129, 0.4);
+}
+
+button:hover {
+  background: #ff758c;
+  transform: translateY(-2px);
+}
+
+#basket {
+  font-size: 40px;
+  margin-top: 25px;
+  padding: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 15px;
+}
+
+.falling-heart {
+  position: absolute;
+  top: -40px;
+  font-size: 32px;
+  animation: fall 0.8s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { top: 75%; opacity: 0; transform: scale(1.5); }
+}
+
+#redirect {
+  display: none;
+  width: 380px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 40px 25px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="quiz">
+  <h1>💖 Heart Quest</h1>
+  <p id="question"></p>
+  <input id="answer" placeholder="Type your answer..."/>
+  <button onclick="submitAnswer()">Check Answer 💘</button>
+  <div id="basket">🧺 <span id="heartsInBasket"></span></div>
+</div>
+
+<div id="redirect">
+  <h1>💖 Mission Complete!</h1>
+  <br>
+  <p style="font-size: 1.2rem;">
+    Amazing! You remembered everything. Now let’s head to the memory game... 🥹❤️
+  </p>
+</div>
+
+<audio id="pop" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+
+<script>
+// Fixed the empty answer for the 3rd question
+const questions=[
+ {q:"Where did we first meet?", a:"Colocal"},
+ {q:"Our first proper date was at?", a:"Arcade"},
+ {q:"What is my favorite nickname for you?", a:"BoBo"}, // Change this to your actual answer!
+ {q:"Which song is our relationship song?", a:"Ohh meri jaan"},
+ {q:"When did we first do the deed?", a:"24th jan"}
+];
+
+let index=0, hearts=0;
+
+const qEl=document.getElementById("question");
+const aEl=document.getElementById("answer");
+const basketEl=document.getElementById("heartsInBasket");
+const quiz=document.getElementById("quiz");
+
+qEl.innerText=questions[index].q;
+
+// Allow "Enter" key to submit
+aEl.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") submitAnswer();
+});
+
+function submitAnswer(){
+ const val=aEl.value.toLowerCase().trim();
+ 
+ if(val !== questions[index].a.toLowerCase()){
+   alert("Try again 💕 (Check your spelling!)");
+   return;
+ }
+
+ aEl.value="";
+ 
+ // Create falling heart effect
+ const heart=document.createElement("div");
+ heart.className="falling-heart";
+ heart.innerText="❤️";
+ heart.style.left="50%";
+ quiz.appendChild(heart);
+
+ setTimeout(()=>{
+   heart.remove();
+   try { document.getElementById("pop").play(); } catch(e) {}
+   
+   hearts++;
+   index++;
+   basketEl.innerText="❤️".repeat(hearts);
+
+   if(hearts === 5){
+     setTimeout(()=>{
+       quiz.style.display="none";
+       document.getElementById("redirect").style.display="block";
+     },800);
+
+     setTimeout(()=>{
+       window.location.href="memory.html";
+     },4500);
+   } else {
+     qEl.innerText=questions[index].q;
+   }
+ },800);
+}
+</script>
+</body>
+</html>
